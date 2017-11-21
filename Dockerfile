@@ -17,3 +17,7 @@ RUN wget http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.2-1/sratoolkit.2.8.2-1-ub
 
 ENV PATH $PATH:/sratoolkit.2.8.2-1-ubuntu64/bin/
 
+RUN apt-get -y install python3 python3-dev python3-pip && \
+  pip3 install cutadapt
+
+
