@@ -20,4 +20,4 @@ ENV PATH $PATH:/sratoolkit.2.8.2-1-ubuntu64/bin/
 RUN apt-get -y install python3 python3-dev python3-pip && \
   pip3 install cutadapt
 
-
+RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("dada2")'

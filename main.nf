@@ -40,9 +40,38 @@ process trim_jiang {
   file fastq_file from jiang_split_fastq
 
   output:
-  file "*.fastq.gz" into trimmed_jiang
+  file "*.fastq.gz" into trimmed_jiang 
 
   """
   cutadapt -a barcode_linkedprimer=NNNNNNNNNNTTACCGCGGCTGCTGGCAC...CTGAGCCAGGATCAAACTCT ${fastq_file} > ${fastq_file.baseName}.fastq.gz
+  """
+}
+
+process dada2_jiang {
+  cache true
+
+  input:
+  file fastas from trimmed_jiang.collect()
+
+  output:
+  file 'dada2.Rdata' into gut_dada2
+
+  """
+  dada2_jiang.R $fastas
+  """
+}
+
+process phyloseq_jiang {
+  cache true
+  echo true
+
+  input:
+  file gut_dada2
+  
+  output:
+  file 'gut.rds' into gut_ps
+
+  """
+  phyloseq_jiang.R $gut_dada2
   """
 }
