@@ -38,6 +38,18 @@ download.file(
 
 taxa <- assignTaxonomy(seqtab.nochim, "silva_128_train.fa.gz", multithread=TRUE)
 
+# assign species
+download.file(
+  "https://zenodo.org/record/824551/files/silva_species_assignment_v128.fa.gz",
+  destfile = "silva_species_assignment_v128.fa.gz"
+)
+
+taxa_plus <-
+  addSpecies(taxa,
+             "silva_species_assignment_v128.fa.gz",
+             verbose = FALSE)
+
+# make labels
 samdf <-
   data.frame(cohort = sapply(substr(rownames(seqtab.nochim), 1, 1), function(x)
     if (x == "C") {
@@ -52,7 +64,7 @@ rownames(samdf) <- rownames(seqtab.nochim)
 gut <- phyloseq(
   otu_table(seqtab.nochim, taxa_are_rows = FALSE),
   sample_data(samdf),
-  tax_table(taxa)
+  tax_table(taxa_plus)
 )
 
 saveRDS(object = gut, file = "gut.rds")
