@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-require("dada2")
-require("phyloseq")
+library("dada2")
+library("phyloseq")
 
 # parameters
 # -----------------------------------------------------------------------------

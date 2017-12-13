@@ -63,7 +63,7 @@ process dada2_jiang {
 
 process phyloseq_jiang {
   cache true
-  echo true
+  echo false
 
   input:
   file gut_dada2
