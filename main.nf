@@ -48,7 +48,7 @@ process trim_jiang {
 }
 
 process dada2_jiang {
-  cache true
+  storeDir "$baseDir/cache/dada2_jiang"
 
   input:
   file fastas from trimmed_jiang.collect()
@@ -62,8 +62,7 @@ process dada2_jiang {
 }
 
 process phyloseq_jiang {
-  cache true
-  echo false
+  storeDir "$baseDir/cache/phyloseq_jiang"
 
   input:
   file gut_dada2
