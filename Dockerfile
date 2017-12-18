@@ -21,3 +21,5 @@ RUN apt-get -y install python3 python3-dev python3-pip && \
   pip3 install cutadapt
 
 RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("dada2","phyloseq"))'
+
+RUN apt-get -y install rsync

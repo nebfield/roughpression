@@ -74,3 +74,22 @@ process phyloseq_jiang {
   phyloseq_jiang.R $gut_dada2
   """
 }
+
+// TODO: change from hardcoded 
+oral_dir = Channel.fromPath('/home/ben/data/oral_microbiome/combined-cohort/*.fastq.gz')
+
+process dada2_oral {
+  storeDir "$baseDir/cache/dada2_oral"
+  stageInMode 'copy'
+  
+  input:
+  file fastq from oral_dir.collect()
+
+  output:
+  file 'dada2.RData' into oral_dada2
+  
+  """
+  dada2_oral.R 
+  """
+}
+
