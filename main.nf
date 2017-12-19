@@ -93,3 +93,20 @@ process dada2_oral {
   """
 }
 
+samp_data = file("$baseDir/bootstrap/sample_data.tsv")
+
+process phyloseq_oral {
+  storeDir "$baseDir/cache/phyloseq_oral"
+  
+  input:
+  file oral_dada2
+  file samp_data
+
+  output:
+  file 'oral.rds' into oral_ps
+
+  """
+  phyloseq_oral.R $oral_dada2 $samp_data
+  """
+}
+
