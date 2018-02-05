@@ -12,6 +12,7 @@ gut_y <- as.numeric(phyloseq::sample_data(gut)$cohort)
 
 # objects: rows, attributes: columns
 ra_annot <- cbind(data.frame(phyloseq::otu_table(gut), Class = gut_y, check.names = FALSE))
+foreign::write.arff(ra_annot, file = "gut.arff")
 write.table(ra_annot, file = "gut.csv", sep = ",", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 # java -jar mahout-extensions-standalone-reducts.jar -i myData.csv -numSub 5000 -subCard 150

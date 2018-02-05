@@ -16,6 +16,8 @@ RUN wget http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.2-1/sratoolkit.2.8.2-1-ub
 
 RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("dada2","phyloseq"))'
 
+RUN R -e 'install.packages("foreign")'
+
 # sed fixes weird SSL cert bug 
 RUN cd /tmp/ \
  && git clone https://github.com/wgromniak/mahout-extensions.git \

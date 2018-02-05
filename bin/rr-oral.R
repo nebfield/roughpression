@@ -10,4 +10,5 @@ oral_y <- as.numeric(phyloseq::sample_data(oral)$cohort)
 
 # objects: rows, attributes: columns
 ra_annot <- cbind(data.frame(phyloseq::otu_table(oral), Class = oral_y, check.names = FALSE))
+foreign::write.arff(ra_annot, file = "oral.arff")
 write.table(ra_annot, file = "oral.csv", sep = ",", quote = FALSE, row.names = FALSE, col.names = FALSE)

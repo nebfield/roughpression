@@ -115,12 +115,12 @@ process reduct_gut {
   file gut_ps
   
   output:
-  file 'gut_feature_ranks.txt' into gut_ranks
   val 'done' into reduct_check
   
   """
   rr-gut.R $gut_ps
-  java -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i gut.csv -numSub 5000 -subCard 40 -seed 0451 > gut_feature_ranks.txt
+  # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i gut.csv -numSub 5000 -subCard 40 -seed 0451 > gut_feature_ranks.txt
+  # rr-select.R $gut_ps gut_feature_ranks.txt 
   """
 }
 
@@ -129,14 +129,11 @@ process reduct_oral {
   file oral_ps
   val type from reduct_check
 
-  output:
-  file 'oral_feature_ranks.txt' into oral_ranks
-  
   when:
   type == 'done' 
   
   """
   rr-oral.R $oral_ps
-  java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i oral.csv -numSub 5000 -subCard 40 -seed 0451 > oral_feature_ranks.txt
+  # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i oral.csv -numSub 5000 -subCard 40 -seed 0451 > oral_feature_ranks.txt
   """
 }
