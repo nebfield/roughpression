@@ -120,7 +120,7 @@ process reduct_gut {
   """
   rr-gut.R $gut_ps
   # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i gut.csv -numSub 5000 -subCard 40 -seed 0451 > gut_feature_ranks.txt
-  # rr-select.R $gut_ps gut_feature_ranks.txt 
+  # rr-select.R $gut_ps gut_feature_ranks.txt
   """
 }
 

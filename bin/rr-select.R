@@ -17,7 +17,7 @@ idx <-
     header = FALSE
   ))
 idx_fixed <- idx + 1
-
-trim <- phyloseq::otu_table(ps)[, idx_fixed]
-trim_ps <- phyloseq::prune_taxa(colnames(trim), ps)
-saveRDS(object = trim_ps, file = "trimmed.rds")
+ 
+# trim <- phyloseq::otu_table(ps)[, idx_fixed]
+# trim_ps <- phyloseq::prune_taxa(colnames(trim), ps)
+# saveRDS(object = trim_ps, file = "trimmed.rds")
