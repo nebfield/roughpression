@@ -115,7 +115,8 @@ process reduct_gut {
   file gut_ps
   
   output:
-  val 'done' into reduct_check
+  file 'short_names.tsv' into gut_shortnames
+  file 'gut.arff' into gut_arff
   
   """
   rr-gut.R $gut_ps
@@ -124,14 +125,25 @@ process reduct_gut {
   """
 }
 
+process rs_gut {
+  publishDir "$baseDir/results/gut"
+  
+  input:
+  file gut_arff
+  
+  output:
+  file 'rules.txt' into gut_rules
+  file 'rule-support.csv' into gut_rule_support 
+  
+  """
+  java -cp /tmp/mbrs.jar uk.ac.ulster.rs.Microbiome $gut_arff
+  """
+}
+
 process reduct_oral {
   input:
   file oral_ps
-  val type from reduct_check
 
-  when:
-  type == 'done' 
-  
   """
   rr-oral.R $oral_ps
   # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i oral.csv -numSub 5000 -subCard 40 -seed 0451 > oral_feature_ranks.txt
