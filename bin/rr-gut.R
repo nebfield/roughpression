@@ -46,7 +46,7 @@ colnames(ra_arff) <- c(short_names$short, "Class")
 
 write.table(
   short_names,
-  file = "short_names.tsv",
+  file = "gut_short_names.tsv",
   sep = "\t",
   row.names = FALSE,
   quote = FALSE

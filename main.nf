@@ -110,18 +110,19 @@ process phyloseq_oral {
   """
 }
 
-process reduct_gut {
-  input:
-  file gut_ps
+process rs_oral {
+  publishDir "$baseDir/results/oral"
   
+  input:
+  file oral_ps
+
   output:
-  file 'short_names.tsv' into gut_shortnames
-  file 'gut.arff' into gut_arff
+  file 'oral_short_names.tsv' into oral_shortnames
+  file 'rule-support.csv' into oral_rules
   
   """
-  rr-gut.R $gut_ps
-  # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i gut.csv -numSub 5000 -subCard 40 -seed 0451 > gut_feature_ranks.txt
-  # rr-select.R $gut_ps gut_feature_ranks.txt
+  rr-oral.R $oral_ps
+  java -cp /tmp/mbrs.jar uk.ac.ulster.rs.Microbiome oral.arff
   """
 }
 
@@ -129,23 +130,15 @@ process rs_gut {
   publishDir "$baseDir/results/gut"
   
   input:
-  file gut_arff
+  file gut_ps
   
   output:
-  file 'rules.txt' into gut_rules
-  file 'rule-support.csv' into gut_rule_support 
+  file 'gut_short_names.tsv' into gut_shortnames
+  file 'rule-support.csv' into gut_rules 
   
   """
-  java -cp /tmp/mbrs.jar uk.ac.ulster.rs.Microbiome $gut_arff
+  rr-gut.R $gut_ps
+  java -cp /tmp/mbrs.jar uk.ac.ulster.rs.Microbiome gut.arff
   """
 }
 
-process reduct_oral {
-  input:
-  file oral_ps
-
-  """
-  rr-oral.R $oral_ps
-  # java -Xmx32g -jar /tmp/mahout-extensions/build/libs/mahout-extensions-standalone-reducts.jar -i oral.csv -numSub 5000 -subCard 40 -seed 0451 > oral_feature_ranks.txt
-  """
-}
