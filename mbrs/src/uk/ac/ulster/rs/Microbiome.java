@@ -36,7 +36,9 @@ public class Microbiome {
         new StdOutProgress());
 
     // output rules to text
-    PrintWriter out = new PrintWriter("rules.txt");
+    try(PrintWriter out = new PrintWriter("rules.txt")){
+      out.println(rsc.getRules().toString());
+    }
 
     // store rules and support in hashmap
     Collection<Rule> rules = rsc.getRules();
@@ -54,6 +56,7 @@ public class Microbiome {
         .append(",")
         .append(entry.getValue().toString());
     }
+    writer.close();
   }
 }
 
