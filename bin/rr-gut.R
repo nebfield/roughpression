@@ -28,6 +28,11 @@ write.table(
 )
 
 # arff file --------------------------------------------------------------------
+short_names <-
+  tibble::tibble(short = make.unique(stringr::str_sub(
+    phyloseq::taxa_names(gut), start = 1, end = 5)), 
+    long = phyloseq::taxa_names(gut))
+
 ra_arff <-
   cbind(
     data.frame(
@@ -37,12 +42,7 @@ ra_arff <-
     )
   )
 
-short_names <-
-  tibble::tibble(short = make.unique(stringr::str_sub(
-    colnames(ra_arff), start = 1, end = 5)), 
-  long = colnames(ra_arff))
-
-colnames(ra_arff) <- short_names$shorts
+colnames(ra_arff) <- c(short_names$short, "Class")
 
 write.table(
   short_names,
