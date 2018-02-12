@@ -117,7 +117,6 @@ process rs_oral {
   file oral_ps
 
   output:
-  file 'oral_short_names.tsv' into oral_shortnames
   file 'rule-support.csv' into oral_rules
   
   """
@@ -133,7 +132,6 @@ process rs_gut {
   file gut_ps
   
   output:
-  file 'gut_short_names.tsv' into gut_shortnames
   file 'rule-support.csv' into gut_rules 
   
   """

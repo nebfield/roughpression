@@ -27,11 +27,6 @@ write.table(
 )
 
 # arff file --------------------------------------------------------------------
-short_names <-
-  tibble::tibble(short = make.unique(stringr::str_sub(
-    phyloseq::taxa_names(oral), start = 1, end = 5)), 
-    long = phyloseq::taxa_names(oral))
-
 ra_arff <-
   cbind(
     data.frame(
@@ -40,15 +35,4 @@ ra_arff <-
       check.names = FALSE
     )
   )
-
-colnames(ra_arff) <- c(short_names$short, "Class")
-
-write.table(
-  short_names,
-  file = "oral_short_names.tsv",
-  sep = "\t",
-  row.names = FALSE,
-  quote = FALSE
-)
-
 foreign::write.arff(ra_arff, file = "oral.arff")
