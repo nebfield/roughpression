@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
 
+set.seed(0451)
+
 library("dada2")
 library("phyloseq")
 
@@ -19,7 +21,7 @@ download.file(
   destfile = "silva_128_train.fa.gz"
 )
 
-taxa <- assignTaxonomy(seqtab_nochim, "silva_128_train.fa.gz", multithread=TRUE)
+taxa <- assignTaxonomy(seqtab_nochim, "silva_128_train.fa.gz", multithread=8)
 
 # assign species
 download.file(
@@ -53,5 +55,7 @@ oral <- phyloseq(
   sample_data(samdf),
   tax_table(taxa_plus)
 )
+
+oral <- phyloseq::subset_taxa(oral, !is.na(Phylum))
 
 saveRDS(object = oral, file = "oral.rds")
