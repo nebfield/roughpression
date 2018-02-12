@@ -17,7 +17,7 @@ process get_jiang_dataset {
 }
 
 jiang_bc = file("$baseDir/bootstrap/jiang-bc.txt")
-process prep_jiang_dataset {
+process prep_gut_dataset {
   storeDir "$baseDir/cache/demuxed"
 
   input:
@@ -33,7 +33,7 @@ process prep_jiang_dataset {
   """
 }
 
-process trim_jiang {
+process trim_gut {
   cache true
 
   input:
@@ -47,22 +47,23 @@ process trim_jiang {
   """
 }
 
-process dada2_jiang {
-  storeDir "$baseDir/cache/dada2_jiang"
+process dada2_gut {
+  storeDir "$baseDir/cache/dada2_gut"
 
   input:
   file fastas from trimmed_jiang.collect()
 
   output:
   file 'dada2.Rdata' into gut_dada2
+  val 'done' into gut_dada2_done
 
   """
-  dada2_jiang.R $fastas
+  dada2_gut.R $fastas
   """
 }
 
-process phyloseq_jiang {
-  storeDir "$baseDir/cache/phyloseq_jiang"
+process phyloseq_gut {
+  storeDir "$baseDir/cache/phyloseq_gut"
 
   input:
   file gut_dada2
@@ -71,7 +72,7 @@ process phyloseq_jiang {
   file 'gut.rds' into gut_ps
 
   """
-  phyloseq_jiang.R $gut_dada2
+  phyloseq_gut.R $gut_dada2
   """
 }
 
@@ -84,9 +85,13 @@ process dada2_oral {
   
   input:
   file fastq from oral_dir.collect()
+  val x from gut_dada2_done
 
   output:
   file 'dada2.RData' into oral_dada2
+  
+  when:
+  x == 'done' 
   
   """
   dada2_oral.R 
