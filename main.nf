@@ -69,7 +69,7 @@ process phyloseq_gut {
   file gut_dada2
   
   output:
-  file 'gut.rds' into gut_ps
+  file 'gut.rds' into gut_ps, gut_ps_parse
 
   """
   phyloseq_gut.R $gut_dada2
@@ -108,7 +108,7 @@ process phyloseq_oral {
   file samp_data
 
   output:
-  file 'oral.rds' into oral_ps
+  file 'oral.rds' into oral_ps, oral_ps_parse
 
   """
   phyloseq_oral.R $oral_dada2 $samp_data
@@ -144,4 +144,36 @@ process rs_gut {
   java -cp /tmp/mbrs.jar uk.ac.ulster.rs.Microbiome gut.arff
   """
 }
+
+process parse_oral {
+  publishDir "$baseDir/results/oral"
+  
+  input:
+  file oral_ps_parse
+  file oral_rules
+  
+  output:
+  file 'annotated_rules.txt' into oral_annot_rules
+  
+  """
+  parse_rules.R $oral_ps_parse $oral_rules
+  """
+}
+
+process parse_gut {
+  publishDir "$baseDir/results/gut"
+
+  input:
+  file gut_ps_parse
+  file gut_rules
+  
+  output:
+  file 'annotated_rules.txt' into gut_annot_rules
+  
+  """
+  parse_rules.R $gut_ps_parse $gut_rules
+  """
+}
+
+
 
