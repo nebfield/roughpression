@@ -5,12 +5,14 @@ import rseslib.structure.rule.Rule;
 import rseslib.structure.rule.RuleWithStatistics;
 import rseslib.structure.table.ArrayListDoubleDataTable;
 import rseslib.structure.table.DoubleDataTable;
+import rseslib.system.Configuration;
 import rseslib.system.progress.StdOutProgress;
 
 import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class Microbiome {
 
@@ -25,13 +27,23 @@ public class Microbiome {
       System.exit(0);
     }
 
-    DoubleDataTable table = new ArrayListDoubleDataTable(
-        new File(args[0]),
+    DoubleDataTable table = new ArrayListDoubleDataTable(new File(args[0]),
         new StdOutProgress());
 
     // sanity check: verify the class labels
     System.out.println(table.attributes().nominalDecisionAttribute());
-    RoughSetRuleClassifier rsc = new RoughSetRuleClassifier(null,
+
+    // load and set properties
+    Properties rscProp = Configuration.loadDefaultProperties(RoughSetRuleClassifier.class);
+    System.out.println(rscProp.stringPropertyNames());
+
+    // discretise before loading
+    rscProp.setProperty("Discretization", "None");
+
+    // use all training data to calculate reducts
+    rscProp.setProperty("Reducts", "AllGlobal");
+
+    RoughSetRuleClassifier rsc = new RoughSetRuleClassifier(rscProp,
         table,
         new StdOutProgress());
 
