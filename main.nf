@@ -55,7 +55,6 @@ process dada2_gut {
 
   output:
   file 'dada2.Rdata' into gut_dada2
-  val 'done' into gut_dada2_done
 
   """
   dada2_gut.R $fastas
@@ -81,17 +80,12 @@ oral_dir = Channel.fromPath('/home/ben/data/oral_microbiome/combined-cohort/*.fa
 
 process dada2_oral {
   storeDir "$baseDir/cache/dada2_oral"
-  stageInMode 'copy'
   
   input:
   file fastq from oral_dir.collect()
-  val x from gut_dada2_done
-
+  
   output:
   file 'dada2.RData' into oral_dada2
-  
-  when:
-  x == 'done' 
   
   """
   dada2_oral.R 
@@ -123,6 +117,7 @@ process rs_oral {
 
   output:
   file 'rule-support.csv' into oral_rules
+  file 'oral.arff' 
   
   """
   rr-oral.R $oral_ps
@@ -138,6 +133,7 @@ process rs_gut {
   
   output:
   file 'rule-support.csv' into gut_rules 
+  file 'gut.arff'
   
   """
   rr-gut.R $gut_ps
