@@ -29,3 +29,5 @@ ENV PATH $PATH:/tmp/edirect/
 ENV PATH $PATH:/tmp/sratoolkit.2.8.2-1-ubuntu64/bin/
 
 COPY mbrs.jar /tmp/
+
+RUN R -e 'install.packages("tidyverse")'
