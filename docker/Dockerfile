@@ -16,7 +16,7 @@ RUN wget http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.2-1/sratoolkit.2.8.2-1-ub
 
 RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("dada2","phyloseq"))'
 
-RUN R -e 'install.packages("foreign")'
+RUN R -e 'install.packages(c("foreign", "tidyverse"))'
 
 # sed fixes weird SSL cert bug 
 RUN cd /tmp/ \
@@ -29,5 +29,3 @@ ENV PATH $PATH:/tmp/edirect/
 ENV PATH $PATH:/tmp/sratoolkit.2.8.2-1-ubuntu64/bin/
 
 COPY mbrs.jar /tmp/
-
-RUN R -e 'install.packages("tidyverse")'
