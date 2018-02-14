@@ -35,13 +35,6 @@ public class Microbiome {
 
     // load and set properties
     Properties rscProp = Configuration.loadDefaultProperties(RoughSetRuleClassifier.class);
-    System.out.println(rscProp.stringPropertyNames());
-
-    // discretise before loading
-    rscProp.setProperty("Discretization", "None");
-
-    // use all training data to calculate reducts
-    rscProp.setProperty("Reducts", "AllGlobal");
 
     RoughSetRuleClassifier rsc = new RoughSetRuleClassifier(rscProp,
         table,

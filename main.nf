@@ -35,7 +35,7 @@ process prep_gut_dataset {
 
 process trim_gut {
   cache true
-
+  
   input:
   file fastq_file from jiang_split_fastq
 
@@ -110,7 +110,7 @@ process phyloseq_oral {
 }
 
 process rs_oral {
-  publishDir "$baseDir/results/oral"
+  publishDir "$baseDir/results/oral", mode: 'copy'
   
   input:
   file oral_ps
@@ -126,7 +126,7 @@ process rs_oral {
 }
 
 process rs_gut {
-  publishDir "$baseDir/results/gut"
+  publishDir "$baseDir/results/gut", mode: 'copy'
   
   input:
   file gut_ps
@@ -170,6 +170,3 @@ process parse_gut {
   parse_rules.R $gut_ps_parse $gut_rules
   """
 }
-
-
-
