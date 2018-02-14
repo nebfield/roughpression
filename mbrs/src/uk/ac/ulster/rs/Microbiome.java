@@ -1,6 +1,10 @@
 package uk.ac.ulster.rs;
 
 import rseslib.processing.classification.rules.roughset.RoughSetRuleClassifier;
+import rseslib.processing.discretization.DiscretizationFactory;
+import rseslib.processing.transformation.TableTransformer;
+import rseslib.processing.transformation.TransformationProvider;
+import rseslib.processing.transformation.Transformer;
 import rseslib.structure.rule.Rule;
 import rseslib.structure.rule.RuleWithStatistics;
 import rseslib.structure.table.ArrayListDoubleDataTable;
@@ -23,27 +27,25 @@ public class Microbiome {
       System.out.println("    java ... uk.ac.ulster.rs.Microbiome <data file>");
       System.out.println();
       System.out.println("Train a rough set rule classifier on microbiome census data");
-      System.out.println("Outputs rules and rule statistics");
+      System.out.println("Outputs rules");
       System.exit(0);
     }
 
     DoubleDataTable table = new ArrayListDoubleDataTable(new File(args[0]),
         new StdOutProgress());
 
+//    DoubleDataTable table = new ArrayListDoubleDataTable(new File("gut.arff"),
+//        new StdOutProgress());
+
     // sanity check: verify the class labels
     System.out.println(table.attributes().nominalDecisionAttribute());
 
-    // load and set properties
+    // load default properties
     Properties rscProp = Configuration.loadDefaultProperties(RoughSetRuleClassifier.class);
 
     RoughSetRuleClassifier rsc = new RoughSetRuleClassifier(rscProp,
         table,
         new StdOutProgress());
-
-    // output rules to text
-    try(PrintWriter out = new PrintWriter("rules.txt")){
-      out.println(rsc.getRules().toString());
-    }
 
     // store rules and support in hashmap
     Collection<Rule> rules = rsc.getRules();
@@ -62,6 +64,19 @@ public class Microbiome {
         .append(entry.getValue().toString());
     }
     writer.close();
+
+    // output discretised data for analysis
+    System.out.println("Discretisation used: " + rsc.getProperty("Discretization"));
+    TransformationProvider discrProv = DiscretizationFactory.getDiscretizationProvider(rscProp);
+    Transformer m_cDiscretizer = null;
+    if (discrProv != null)
+      m_cDiscretizer = discrProv.generateTransformer(table);
+    DoubleDataTable discrTable = null;
+    if (m_cDiscretizer != null)
+      discrTable = TableTransformer.transform(table, m_cDiscretizer);
+    if (discrTable != null)
+      discrTable.storeArff(args[0], new File("discretised.arff"), new StdOutProgress());
   }
+
 }
 

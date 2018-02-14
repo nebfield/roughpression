@@ -118,6 +118,7 @@ process rs_oral {
   output:
   file 'rule-support.csv' into oral_rules
   file 'oral.arff' 
+  file 'discretised.arff'
   
   """
   rr-oral.R $oral_ps
@@ -134,6 +135,7 @@ process rs_gut {
   output:
   file 'rule-support.csv' into gut_rules 
   file 'gut.arff'
+  file 'discretised.arff'
   
   """
   rr-gut.R $gut_ps
