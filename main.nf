@@ -118,7 +118,8 @@ process rs_oral {
   output:
   file 'rule-support.csv' into oral_rules
   file 'oral.arff' 
-  file 'discretised.arff'
+  file 'discretised.arff' into oral_disc
+  file 'taxonomy_key.txt'
   
   """
   rr-oral.R $oral_ps
@@ -135,7 +136,8 @@ process rs_gut {
   output:
   file 'rule-support.csv' into gut_rules 
   file 'gut.arff'
-  file 'discretised.arff'
+  file 'discretised.arff' into gut_disc
+  file 'taxonomy_key.txt'
   
   """
   rr-gut.R $gut_ps
@@ -144,31 +146,33 @@ process rs_gut {
 }
 
 process parse_oral {
-  publishDir "$baseDir/results/oral"
+  publishDir "$baseDir/results/oral", mode: 'copy'
   
   input:
   file oral_ps_parse
   file oral_rules
+  file oral_disc
   
   output:
   file 'annotated_rules.txt' into oral_annot_rules
   
   """
-  parse_rules.R $oral_ps_parse $oral_rules
+  parse_rules.R $oral_ps_parse $oral_rules $oral_disc
   """
 }
 
 process parse_gut {
-  publishDir "$baseDir/results/gut"
+  publishDir "$baseDir/results/gut", mode: 'copy'
 
   input:
   file gut_ps_parse
   file gut_rules
+  file gut_disc
   
   output:
   file 'annotated_rules.txt' into gut_annot_rules
   
   """
-  parse_rules.R $gut_ps_parse $gut_rules
+  parse_rules.R $gut_ps_parse $gut_rules $gut_disc
   """
 }

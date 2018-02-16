@@ -28,10 +28,31 @@ write.table(
 )
 
 # arff file --------------------------------------------------------------------
+
+otu <- data.frame(phyloseq::otu_table(gut))
+
+# collapse a phyloseq taxonomy table to a semicolon separated string
+parse_taxonomy <- function(x) {
+  tax <-
+    data.frame(
+      tax = apply(phyloseq::tax_table(x), 1, paste, collapse = ";"),
+      stringsAsFactors = FALSE
+    )
+  return(tibble::rownames_to_column(tax, "seq"))
+}
+
+tax <- parse_taxonomy(gut)
+tax$tax <- make.unique(tax$tax, sep = "_")
+write.table(tax, file = "taxonomy_key.txt", sep = "\t", quote = FALSE)
+
+# replace colnames (sequence variants) with a taxonomy
+# makes rules easier to interpret 
+colnames(otu) <- tax$tax[match(colnames(otu), tax$seq)]
+
 ra_arff <-
   cbind(
     data.frame(
-      phyloseq::otu_table(gut),
+      otu,
       Class = phyloseq::sample_data(gut)$cohort,
       check.names = FALSE
     )
