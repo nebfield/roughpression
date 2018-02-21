@@ -1,0 +1,17 @@
+Class	Rule number	Species	Abundance
+Depression	1	Bacteria;Firmicutes;Bacilli;Lactobacillales;Streptococcaceae;Streptococcus;NA_2	High
+Depression	1	Bacteria;Firmicutes;Bacilli;Lactobacillales;Carnobacteriaceae;Granulicatella;elegans	Low
+Depression	2	Bacteria;Firmicutes;Bacilli;Lactobacillales;Streptococcaceae;Streptococcus;NA_2	High
+Depression	2	Bacteria;Firmicutes;Negativicutes;Selenomonadales;Veillonellaceae;Selenomonas_3;NA_2	High
+Control	1	Bacteria;Firmicutes;Bacilli;Lactobacillales;Carnobacteriaceae;Granulicatella;elegans	High
+Control	1	Bacteria;Firmicutes;Negativicutes;Selenomonadales;Veillonellaceae;Selenomonas_3;NA_2	Low
+Control	1	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Prevotellaceae;Prevotella_7;NA_67	Low
+Control	2	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Prevotellaceae;Prevotella_7;melaninogenica	Low
+Control	2	Bacteria;Firmicutes;Bacilli;Lactobacillales;Streptococcaceae;Streptococcus;NA_2	Low
+Control	3	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Prevotellaceae;Prevotella_7;melaninogenica	Low
+Control	3	Bacteria;Firmicutes;Bacilli;Lactobacillales;Carnobacteriaceae;Granulicatella;elegans	High
+Control	3	Bacteria;Firmicutes;Negativicutes;Selenomonadales;Veillonellaceae;Selenomonas_3;NA_2	Low
+Control	4	Bacteria;Proteobacteria;Gammaproteobacteria;Pasteurellales;Pasteurellaceae;Haemophilus;parainfluenzae	High
+Control	4	Bacteria;Firmicutes;Bacilli;Lactobacillales;Carnobacteriaceae;Granulicatella;elegans	High
+Control	5	Bacteria;Firmicutes;Bacilli;Lactobacillales;Streptococcaceae;Streptococcus;NA_2	Low
+Control	5	Bacteria;Firmicutes;Negativicutes;Selenomonadales;Veillonellaceae;Selenomonas_3;NA_2	Low

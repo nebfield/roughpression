@@ -14,7 +14,6 @@ args <- commandArgs(trailingOnly=TRUE)
 ps <- readRDS(args[[1]])
 rules <- read.table(args[[2]], sep = ",", skip = 1,
                     col.names = c("Rule", "Support"), stringsAsFactors = FALSE)
-disc <- data.frame(foreign::read.arff(args[[3]]))
 
 # split string to get separate results column 
 decs <-
@@ -34,4 +33,9 @@ write.table(interesting_rules %>% select(Decision, Rule, Support),
             sep = "\t", 
             row.names = FALSE)
 
-# disc_trim <- disc[, unlist(seqs)]
+bugs <-
+  stringr::str_extract_all(interesting_rules$Rule,
+                           "\\w+;\\w+;\\w+;\\w+;\\w+;\\w+;\\w+")
+bugs <- sapply(bugs, function(x) stringr::str_replace_all(x, ";", "."))
+disc_trim <- disc[, c(unlist(bugs), "Class")]
+
