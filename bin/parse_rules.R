@@ -37,5 +37,3 @@ bugs <-
   stringr::str_extract_all(interesting_rules$Rule,
                            "\\w+;\\w+;\\w+;\\w+;\\w+;\\w+;\\w+")
 bugs <- sapply(bugs, function(x) stringr::str_replace_all(x, ";", "."))
-disc_trim <- disc[, c(unlist(bugs), "Class")]
-

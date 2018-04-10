@@ -154,10 +154,11 @@ process parse_oral {
   file oral_disc
   
   output:
-  file 'annotated_rules.txt' into oral_annot_rules
+  file 'oral_annotated_rules.txt' into oral_annot_rules
   
   """
   parse_rules.R $oral_ps_parse $oral_rules $oral_disc
+  cp -L annotated_rules.txt oral_annotated_rules.txt
   """
 }
 
@@ -170,9 +171,10 @@ process parse_gut {
   file gut_disc
   
   output:
-  file 'annotated_rules.txt' into gut_annot_rules
+  file 'gut_annotated_rules.txt' into gut_annot_rules
   
   """
   parse_rules.R $gut_ps_parse $gut_rules $gut_disc
+  cp -L annotated_rules.txt gut_annotated_rules.txt
   """
 }
